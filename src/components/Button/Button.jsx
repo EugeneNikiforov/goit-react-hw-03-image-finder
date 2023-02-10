@@ -4,9 +4,11 @@ import css from './Button.module.scss';
 
 export default function Button({ click }) {
     return (
-        <button type="button" claccName={css.button} onClick={click}>
-            Load more
-        </button>
+        <div className={css.buttonPlace}>
+            <button type="button" className={css.button} onClick={click}>
+                Load more
+            </button>
+        </div>
     )
 };
 

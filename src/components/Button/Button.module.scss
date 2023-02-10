@@ -22,4 +22,10 @@
     &:focus {
         background-color: #303f9f;
     }
+
+    &Place {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
 }

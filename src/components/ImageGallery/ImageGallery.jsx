@@ -7,17 +7,9 @@ import css from './ImageGallery.module.scss';
 
 export default class ImageGallery extends Component {
     state = {
-    images: null,
+    images: [],
     loading: false,
     page: 1,
-    };
-    
-    loadMoreImages = () => {
-        this.setState((prev) => {
-            return {
-                page: prev.page + 1,
-            };
-        });
     };
     componentDidUpdate(prevProps, prevState) {
         if (prevState.page !== this.state.page) {
@@ -25,26 +17,32 @@ export default class ImageGallery extends Component {
             this.getImageFetch();
             return;
         }
-        if (prevProps.imgName !== this.props.imgName) {
-            if (prevProps.imgName) {
-                this.setState({ images: null });
+        if (prevProps.namePic !== this.props.namePic) {
+            if (prevProps.namePic) {
+                this.setState({ images: [] });
             }
             this.setState({ loading: true });
             this.setState({ page: 1 });
             this.getImageFetch();
-        }
-        if (this.state.images && this.state.images.length === 0) {
-            alert("There is no result for your reqest!");
-            this.setState({ images: null });
-        }
+        } 
+        
     };
+    loadMoreImages = () => {
+        this.setState((prev) => {
+            return {
+                page: prev.page + 1,
+            };
+        });
+    };
+    
 
     getImageFetch = () => {
         const { namePic } = this.props;
         const { page } = this.state;
         const storageKey = `32864806-51f72b6a703d7e1693286dbfa`;
+        console.log(namePic);
         fetch(
-            `https://pixabay.com/api/?q=${namePic}&page=${page}&key=${storageKey}&image_type=photo&orientation=horizontal&per_page=12`
+            `https://pixabay.com/api?q=${namePic}&page=${page}&key=${storageKey}&image_type=photo&orientation=horizontal&per_page=12`
         ).then((response) => {
             if (response.ok) {
                 return response.json().then(({ hits }) => {
@@ -83,15 +81,17 @@ export default class ImageGallery extends Component {
                             );
                         }) : ""}
                     </div>
-                    {loading && <Audio
-                        height="80"
-                        width="80"
-                        radius="9"
-                        color="green"
-                        ariaLabel="loading"
-                        wrapperStyle
-                        wrapperClass
-                    />}
+                    <div className={css.imageGallerySpinner}>
+                        {loading && <Audio
+                            height="80"
+                            width="80"
+                            radius="9"
+                            color="blue"
+                            ariaLabel="loading"
+                            // wrapperStyle
+                            // wrapperClass
+                        />}
+                    </div>
                 </div>
                 {images && images.length !== 0 && !loading && (<Button click={this.loadMoreImages} />)}
             </div>
