@@ -18,11 +18,10 @@ export default class ImageGallery extends Component {
             return;
         }
         if (prevProps.namePic !== this.props.namePic) {
-            if (prevProps.namePic) {
-                this.setState({ images: [] });
-            }
-            this.setState({ loading: true });
-            this.setState({ page: 1 });
+            // if (prevProps.namePic !== "") {
+            //     this.setState({ images: [] });
+            // }
+            this.setState({ loading: true, page: 1 });
             this.getImageFetch();
         } 
         
@@ -40,7 +39,7 @@ export default class ImageGallery extends Component {
         const { namePic } = this.props;
         const { page } = this.state;
         const storageKey = `32864806-51f72b6a703d7e1693286dbfa`;
-        console.log(namePic);
+        console.log(page);
         fetch(
             `https://pixabay.com/api?q=${namePic}&page=${page}&key=${storageKey}&image_type=photo&orientation=horizontal&per_page=12`
         ).then((response) => {

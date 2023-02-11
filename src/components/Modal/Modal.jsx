@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import css from './Modal.module.scss';
 
-const modalRoot = document.querySelector(`#modal-root`);
+// const modalRoot = document.querySelector(`#modal-root`);
 
 export default class Modal extends Component {
     componentDidMount() {
@@ -13,8 +13,8 @@ export default class Modal extends Component {
         window.removeEventListener(`keydown`, this.handleKeyDown);
     }
 
-    handleBackdropClick = (e) => {
-        if (e.target === e.currentTarget) {
+    handleBackdropClick = ({ target, currentTarget }) => {
+        if (target === currentTarget) {
             this.props.onClose();
         }
     };
@@ -25,18 +25,18 @@ export default class Modal extends Component {
         }
     };
     render() {
-        const { photo, tag } = this.props;
+        const { children } = this.props;
         return createPortal (
             <div className={css.overlay} onClick={this.handleBackdropClick}>
                 <div className={css.modal}>
-                    <img src={photo} alt={tag} />
+                    { children }
                 </div>
-            </div>, modalRoot
+            </div>, document.querySelector(`#modal-root`)
         );
     }
 };
 
 Modal.propTypes = {
-    photo: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired
+    children: PropTypes.node.isRequired
+    // tag: PropTypes.string.isRequired
 };

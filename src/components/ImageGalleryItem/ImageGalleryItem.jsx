@@ -9,9 +9,9 @@ export default class ImageGalleryItem extends Component {
         showModal: false,
     };
     runModal = () => {
-        this.setState(({ showModal }) => ({
-            showModal: !showModal,
-        }));
+        this.setState((prevState) => {
+            return { showModal: !prevState.showModal };
+        });
     };
     render() {
         const { bigPhoto, smallPhoto, tag } = this.props;
@@ -19,7 +19,9 @@ export default class ImageGalleryItem extends Component {
             <div className={css.imageGalleryItem}>
                 <img className={css.imageGalleryItem_image} onClick={this.runModal} src={smallPhoto} alt={tag} />
                 {this.state.showModal && (
-                    <Modal photo={bigPhoto} tag={tag} onClose={this.runModal} />
+                    <Modal onClose={this.runModal}>
+                        <img src={bigPhoto} alt={tag} />
+                    </Modal>
                 )}
             </div>
         );

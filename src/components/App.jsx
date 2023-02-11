@@ -14,17 +14,9 @@ export default class App extends Component {
   render() {
   return (
     <div className={css.app}
-      // style={{
-      //   height: '100vh',
-      //   display: 'flex',
-      //   justifyContent: 'center',
-      //   alignItems: 'center',
-      //   fontSize: 40,
-      //   color: '#010101'
-      // }}
     >
       <Searchbar onSubmit={this.handleFormSubmit} />
-      <ImageGallery namePic={this.state.searchValue} />
+      {this.state.searchValue !== "" && <ImageGallery namePic={this.state.searchValue} />}
     </div>
     );
     }
