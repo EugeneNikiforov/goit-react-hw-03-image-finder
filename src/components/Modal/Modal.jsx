@@ -11,7 +11,9 @@ export default class Modal extends Component {
         window.removeEventListener(`keydown`, this.handleKeyDown);
     }
 
-    handleBackdropClick = ({ target, currentTarget }) => {
+    handleBackdropClick = (e) => {
+        const { target, currentTarget } = e;
+        e.stopPropagation();
         if (target === currentTarget) {
             this.props.onClose();
         }

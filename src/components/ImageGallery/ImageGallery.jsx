@@ -1,21 +1,12 @@
-import { Component } from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Button from '../Button/Button';
 import { Audio } from 'react-loader-spinner';
 import css from './ImageGallery.module.scss';
 
-export default class ImageGallery extends Component {
-    // state = {
-    // images: [],
-    // loading: false,
-    // page: 1,
-    // };
-
-    
-
-    render() {
-        const { images, loading, loadMoreImages } = this.props;
+export default function ImageGallery({ images, loading, loadMoreImages }) {
+       
         return (
             <div>
                 <div className={css.imageGallery}> 
@@ -46,7 +37,6 @@ export default class ImageGallery extends Component {
                 {images && images.length !== 0 && !loading && (<Button click={loadMoreImages} />)}
             </div>
         )
-    }
 };
 
 ImageGallery.propTypes = {

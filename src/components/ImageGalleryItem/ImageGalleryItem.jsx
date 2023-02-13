@@ -8,7 +8,8 @@ export default class ImageGalleryItem extends Component {
     state = {
         showModal: false,
     };
-    runModal = () => {
+    runModal = (e) => {
+        e.stopPropagation();
         this.setState((prevState) => {
             return { showModal: !prevState.showModal };
         });

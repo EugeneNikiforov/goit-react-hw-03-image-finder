@@ -11,7 +11,7 @@ export default class App extends Component {
     page: 1
   };
   handleFormSubmit = (searchValue) => {
-    this.setState({ searchValue, page: 1 });
+    this.setState({ searchValue, page: 1, images: [] });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -38,11 +38,9 @@ export default class App extends Component {
             `https://pixabay.com/api?q=${namePic}&page=${page}&key=${storageKey}&image_type=photo&orientation=horizontal&per_page=12`
         ).then((response) => {
             if (response.ok) {
-                return response.json().then(({ hits }) => {
-                    this.state.images
-                    ? this.setState(({ images }) => ({
-                        images: [...images, ...hits],}))
-                    : this.setState({ images: hits });
+              return response.json().then(({ hits }) => {
+                this.setState(({ images }) => ({
+                        images: [...images, ...hits],}));
             if (hits.length === 0) {
                 alert(`Images are over!`);
             }
@@ -51,9 +49,9 @@ export default class App extends Component {
                 top: document.documentElement.scrollHeight,
                 behavior: "smooth",
             });
-        }).finally(() => this.setState({ loading: false }));
+        }).catch(error => (console.log(error))).finally(() => this.setState({ loading: false }));
         }
-        return Promise.reject(new Error("Nothing found"));
+       
         });
     };
 
